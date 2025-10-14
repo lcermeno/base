@@ -10,7 +10,7 @@ hilt = "2.51.1"
 coreKtx = "1.13.1"
 lifecycleRuntimeKtx = "2.8.3"
 activityCompose = "1.9.0"
-composeBom = "2024.06.00"
+composeBom = "2025.10.00"
 viewModelCompose = "2.8.3"
 navigationCompose = "2.7.7"
 hiltNavigationCompose = "1.2.0"
@@ -22,6 +22,11 @@ okhttp = "4.12.0"
 
 # Database
 room = "2.6.1"
+
+# Navigation 3
+nav3 = "1.0.0-alpha11"
+kotlinxSerialization = "1.6.3"
+kotlinSerializationPlugin = "2.0.0"
 
 # Testing
 junit = "4.13.2"
@@ -66,6 +71,11 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
+#---------- NAVIGATION 3 ----------
+androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
+androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
 
 [plugins]
 #---------- CORE PLUGINS ----------
@@ -73,9 +83,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 #---------- DEPENDENCY PLUGINS ----------
-# Kapt plugin is removed
-# kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
-# KSP plugin is added
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-android-gradle-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializationPlugin" }
 
