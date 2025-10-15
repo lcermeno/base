@@ -1,6 +1,6 @@
 [versions]
 # Core & Build
-agp = "8.12.3"
+agp = "8.13.1"
 kotlin = "2.0.0"
 # KSP version added
 ksp = "2.0.0-1.0.21"
