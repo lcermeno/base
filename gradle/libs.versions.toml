@@ -33,6 +33,9 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
+#Images
+coil = "2.6.0"
+
 [libraries]
 # ... (todas las librerías de androidx, compose, networking, etc., se mantienen igual)
 #---------- ANDROIDX CORE & LIFECYCLE ----------
@@ -76,6 +79,8 @@ androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigat
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
+#---------- IMAGES ----------
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [plugins]
 #---------- CORE PLUGINS ----------
