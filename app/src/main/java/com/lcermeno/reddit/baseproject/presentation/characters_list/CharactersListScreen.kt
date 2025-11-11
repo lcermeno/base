@@ -25,6 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.lcermeno.reddit.baseproject.domain.model.Character
+import com.lcermeno.reddit.baseproject.presentation.characters_list.components.CharacterItem
+import com.lcermeno.reddit.baseproject.presentation.characters_list.components.ErrorView
+import com.lcermeno.reddit.baseproject.presentation.characters_list.components.LoadingView
 
 @Composable
 fun CharactersListScreen(
@@ -57,48 +60,5 @@ fun CharactersListScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ErrorView(error: String) {
-    Text(
-        text = error,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.error
-    )
-}
-
-@Composable
-fun LoadingView() {
-    CircularProgressIndicator()
-}
-
-@Composable
-fun CharacterItem(character: Character, onNavigateToDetail: (Character) -> Unit) {
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                onNavigateToDetail(character)
-            },
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-
-        AsyncImage(
-            model = character.imageUrl,
-            contentDescription = character.name,
-            modifier = Modifier.size(100.dp)
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Text(
-            text = character.name,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
     }
 }
