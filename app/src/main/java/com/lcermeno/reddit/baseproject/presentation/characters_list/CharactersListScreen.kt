@@ -1,5 +1,6 @@
 package com.lcermeno.reddit.baseproject.presentation.characters_list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import com.lcermeno.reddit.baseproject.domain.model.Character
 @Composable
 fun CharactersListScreen(
     viewModel: CharactersListViewModel = hiltViewModel(),
+    onNavigateToDetail: (Character) -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -36,9 +38,12 @@ fun CharactersListScreen(
 
     Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
 
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
 
             if (localState.errorMessage != null) {
                 ErrorView(localState.errorMessage)
@@ -47,7 +52,7 @@ fun CharactersListScreen(
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(uiState.characters) { character ->
-                        CharacterItem(character)
+                        CharacterItem(character, onNavigateToDetail)
                     }
                 }
             }
@@ -70,10 +75,14 @@ fun LoadingView() {
 }
 
 @Composable
-fun CharacterItem(character: Character) {
+fun CharacterItem(character: Character, onNavigateToDetail: (Character) -> Unit) {
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onNavigateToDetail(character)
+            },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
