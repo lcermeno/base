@@ -6,4 +6,5 @@ data class CharactersListState(
     val characters: List<Character> = emptyList(),
     val loading: Boolean = false,
     val errorMessage: String? = null,
+    val searchQuery: String = ""
 )

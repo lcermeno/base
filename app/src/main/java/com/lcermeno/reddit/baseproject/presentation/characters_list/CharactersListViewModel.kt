@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -23,30 +24,45 @@ class CharactersListViewModel @Inject constructor(
     val uiState: StateFlow<CharactersListState>
         get() = _uiState.asStateFlow()
 
+    private val _searchQuery = MutableStateFlow("")
+
+
     init {
 
-        getCharactersUseCase()
-            .onEach { result ->
-                when (val state = result) {
-                    is Resource.Error -> _uiState.update {
-                        it.copy(
-                            loading = false,
-                            errorMessage = state.message
-                        )
+        combine(getCharactersUseCase(), _searchQuery) { result, query ->
+            when (val state = result) {
+                is Resource.Error -> CharactersListState(
+                        loading = false,
+                        errorMessage = state.message
+                    )
+
+
+                is Resource.Loading -> CharactersListState(loading = true)
+
+                is Resource.Success -> {
+                    val filteredCharacters = if (query.isNotBlank()) {
+                        state.data?.filter { character ->
+                            character.name.contains(query, ignoreCase = true)
+                        } ?: emptyList()
+                    } else {
+                        state.data ?: emptyList()
                     }
 
-                    is Resource.Loading -> _uiState.update {
-                        it.copy(loading = true)
-                    }
-                    is Resource.Success -> _uiState.update {
-                        it.copy(
-                            loading = false,
-                            errorMessage = null,
-                            characters = state.data ?: emptyList()
-                        )
-                    }
+                    CharactersListState(
+                        loading = false,
+                        errorMessage = null,
+                        characters = filteredCharacters,
+                        searchQuery = query
+                    )
                 }
+
             }
-            .launchIn(viewModelScope)
+        }.onEach { result ->
+            _uiState.update { result }
+        }.launchIn(viewModelScope)
+    }
+
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
     }
 }
